@@ -89,7 +89,7 @@ public class Personaje
     }
 
 
-public Personaje (string nombre, Tipo tipo, DateOnly nacimiento, Tipo TipoP, string Nombre, int Salud, DateOnly Nacimiento, int Edad, int Velocidad, int Fuerza, int Nivel, int Armadura, int Destreza) // al pasarlo en el constructor como argumentos nadie podra cambiar estos atributos
+public Personaje (string nombre, Tipo tipo, DateOnly nacimiento) // al pasarlo en el constructor como argumentos nadie podra cambiar estos atributos
     {
         if (string.IsNullOrWhiteSpace(nombre)) throw new ArgumentException("Nombre invalido"); // cuando sea nulo o vacio me lanzara nombre invalido
         Nombre = nombre;
