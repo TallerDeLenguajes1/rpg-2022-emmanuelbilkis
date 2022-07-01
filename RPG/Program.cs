@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace videojuego
 {
@@ -8,6 +9,7 @@ namespace videojuego
         {
 
         }
+
     }
     
 }
