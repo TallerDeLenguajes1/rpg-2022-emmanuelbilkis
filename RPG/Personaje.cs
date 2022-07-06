@@ -1,4 +1,6 @@
-namespace videojuego;
+using videojuego;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class Personaje
 {
@@ -125,6 +127,36 @@ public Personaje (string nombre, Tipo tipo, DateOnly nacimiento) // al pasarlo e
             $"Nivel     : {Nivel}" + Environment.NewLine +
             $"Armadura  : {Armadura}" + Environment.NewLine +
             $"Destreza  : {Destreza}";
+    }
+
+
+    public string CrearJson(Personaje personaje)
+ {
+    string jsonString;
+    return  jsonString = JsonSerializer.Serialize(personaje);
+
+}
+
+    public void GuardarJson(string nombreArchivo, string formato, Personaje personaje)
+    {
+        string persStr = CrearJson(personaje);
+        FileStream MiArchivo = new FileStream(nombreArchivo + formato, FileMode.Create);
+        using (StreamWriter Strwriter = new StreamWriter(MiArchivo))
+        {
+            Strwriter.WriteLine("{0}", persStr);
+            Strwriter.Close();
+        }
+    }
+
+    public void GuardarCSV(string nombreArchivo, string formato, Personaje personaje)
+    {
+        string persStr = CrearJson(personaje);
+        FileStream MiArchivo = new FileStream(nombreArchivo + formato, FileMode.Create);
+        using (StreamWriter Strwriter = new StreamWriter(MiArchivo))
+        {
+            Strwriter.WriteLine("{0};{1};{2}", personaje.Nombre, personaje.TipoP,personaje.Salud);
+            Strwriter.Close();
+        }
     }
 
 }

@@ -1,8 +1,11 @@
+
+
 namespace videojuego
 {    
  public class CreadorDePersonajes
  {
     private readonly List<string> nombres;
+    private readonly List<Personaje> personajesListos;
     private readonly Random random;
 
     public CreadorDePersonajes()
@@ -37,8 +40,6 @@ namespace videojuego
     {
         int anio = random.Next(1, 301);
         var fecha = DateTime.Now.AddYears(-anio);
-
-        // TODO: elegir mes y dia al azar tambien
         return DateOnly.FromDateTime(fecha);
     }
 
@@ -51,13 +52,14 @@ namespace videojuego
 
     private string ElegirNombre()
     {
-        // TODO: que pasa si se me acaban los nombres
         int indice = random.Next(0, nombres.Count);
         var nombreElegido = nombres[indice];
         nombres.RemoveAt(indice);
 
         return nombreElegido;
     }
+
+
  }
 
 }
