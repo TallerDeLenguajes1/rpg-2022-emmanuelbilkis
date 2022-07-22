@@ -14,6 +14,7 @@ class Program
 
         var creadorDePersonajes = new CreadorDePersonajes();
         var personajesCreados = new List<Personaje>();
+        var ganadores = new List<Personaje>();
         bool salir = false;
 
         do
@@ -24,10 +25,11 @@ class Program
             Console.WriteLine("2) Mostrar datos de personaje");
             Console.WriteLine("3) Mostrar características de personaje");
             Console.WriteLine("4) Combate");
-            Console.WriteLine("5) Guardar Jugadores Json");
-            Console.WriteLine("6) Combate");
+            Console.WriteLine("5) Guardar ganadores CSV");
+            Console.WriteLine("6) Mostrar ganadores CSV");
+            Console.WriteLine("7) Guardar jugadores Json");
 
-            Console.WriteLine("7) Salir");
+            Console.WriteLine("8) Salir");
             Console.WriteLine();
             Console.Write("Ingrese opcion: ");
 
@@ -94,27 +96,81 @@ class Program
                         else
                         {
                             Console.WriteLine($"Ganó {combate.Ganador.Nombre}");
-                            combate.Ganador.GuardarCSV("Ganadores", ".csv",combate.Ganador);
-                          
+                            ganadores.Add(combate.Ganador);
                         }
                     }
+
                     break;
                     
                 case "5":
 
-                    foreach (var personajeX in personajesCreados)
-                    {
-                        string perstr = personajeX.CrearJson(personajeX);
-                        personajeX.GuardarJson("Jugadores", ".json", personajeX);    
-                    }
+                            guardarGanadoresCSV("ganadores",".csv",ganadores);     
 
                     break;
+                case "6":
+                            MostrarGanadoresCSV("ganadores",".csv");
+                    break;
+                
+                 case "7":
+                            guardarJson("jugadores",".json",personajesCreados);
+                    break;
 
-                case "7":
+                case "8":
                     salir = true;
                     break;
             }
 
         } while (! salir);
     }
+
+    public static void guardarJson(string nombre, string extension, List<Personaje> listaPersonajes)
+    {
+            var options = new JsonSerializerOptions
+            {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true,
+            };
+
+            FileStream miArchivo = new FileStream(nombre + extension, FileMode.OpenOrCreate);
+            string jsonString = JsonSerializer.Serialize(listaPersonajes, options);
+
+            using (StreamWriter strwriter = new StreamWriter(miArchivo))
+            {
+                    strwriter.WriteLine(jsonString);
+                    strwriter.Close();   
+            }  
+            
+    }
+
+    public static void guardarGanadoresCSV(string nombre, string extension, List<Personaje> ganadores)
+    {
+
+            FileStream miArchivo = new FileStream(nombre + extension, FileMode.OpenOrCreate);
+
+            using (StreamWriter strwriter = new StreamWriter(miArchivo))
+            {
+
+                    foreach (var ganadorX in ganadores)
+                    {
+                        strwriter.WriteLine("{0},{2},{3}", ganadorX.Nombre, ganadorX.Edad, ganadorX.Nacimiento);    
+                    }
+                    
+                    strwriter.Close();   
+            }  
+    }
+
+    public static void MostrarGanadoresCSV(string nombre, string extension)
+    {
+
+            FileStream miArchivo = new FileStream(nombre + extension, FileMode.Open);
+
+            using (StreamReader strread = new StreamReader(miArchivo))
+            {
+
+                    string ganadores = strread.ReadToEnd();
+                    Console.WriteLine(ganadores);
+                    strread.Close();   
+            }  
+    }
+
 }

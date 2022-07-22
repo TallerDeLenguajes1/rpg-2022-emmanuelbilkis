@@ -1,5 +1,3 @@
-
-
 namespace videojuego
 {    
  public class CreadorDePersonajes
@@ -31,16 +29,16 @@ namespace videojuego
     {
         string nombre = ElegirNombre();
         Tipo tipo = ElegirTipo();
-        DateOnly nacimiento = ElegirNacimiento();
+        DateTime nacimiento = ElegirNacimiento();
         Personaje nuevo = new Personaje(nombre, tipo, nacimiento);
         return nuevo ;
     }
 
-    private DateOnly ElegirNacimiento()
+    private DateTime ElegirNacimiento()
     {
         int anio = random.Next(1, 301);
         var fecha = DateTime.Now.AddYears(-anio);
-        return DateOnly.FromDateTime(fecha);
+        return (fecha);
     }
 
     private Tipo ElegirTipo()
@@ -55,7 +53,6 @@ namespace videojuego
         int indice = random.Next(0, nombres.Count);
         var nombreElegido = nombres[indice];
         nombres.RemoveAt(indice);
-
         return nombreElegido;
     }
 
