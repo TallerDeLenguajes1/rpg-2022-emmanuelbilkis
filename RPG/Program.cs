@@ -9,11 +9,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        int index, maximo;
+        int index;
         string texto;
 
         var creadorDePersonajes = new CreadorDePersonajes();
         var personajesCreados = new List<Personaje>();
+       // var personajesCreados2 = new List<Personaje>();
         var ganadores = new List<Personaje>();
         bool salir = false;
 
@@ -28,12 +29,13 @@ class Program
             Console.WriteLine("5) Guardar ganadores CSV");
             Console.WriteLine("6) Mostrar ganadores CSV");
             Console.WriteLine("7) Guardar jugadores Json");
-
-            Console.WriteLine("8) Salir");
+            Console.WriteLine("8) Elegir desde Json");
+            Console.WriteLine("9) Salir");
             Console.WriteLine();
             Console.Write("Ingrese opcion: ");
+            string i = Console.ReadLine()!;
+            
 
-            string i = Console.ReadLine().Trim();
             switch (i)
             {
                 case "1":
@@ -43,9 +45,9 @@ class Program
                     break;
 
                 case "2":
-                    maximo = personajesCreados.Count - 1;
+                    int maximo = personajesCreados.Count - 1;
                     Console.Write($"Mostrar datos de cuál personaje (0..{maximo})? ");
-                    index = int.Parse(Console.ReadLine());
+                    index = int.Parse(Console.ReadLine()!);
                     if (index >= 0 && index <= maximo)
                     {
                         texto = personajesCreados[index].DescripcionDeDatos();
@@ -55,12 +57,14 @@ class Program
                     {
                         Console.WriteLine("Número de personaje inválido.");
                     }
+
                     break;
 
                 case "3":
+
                     maximo = personajesCreados.Count - 1;
                     Console.Write($"Mostrar caracteristicas de cuál personaje (0..{maximo})? ");
-                    index = int.Parse(Console.ReadLine());
+                    index = int.Parse(Console.ReadLine()!);
                     if (index >= 0 && index <= maximo)
                     {
                         texto = personajesCreados[index].DescripcionDeCaracteristicas();
@@ -70,14 +74,16 @@ class Program
                     {
                         Console.WriteLine("Número de personaje inválido.");
                     }
+
                     break;
 
                 case "4":
-                    maximo = personajesCreados.Count - 1;
-                    Console.Write($"Elija al primer combatiente (0..{maximo}) ");
-                    int primero = int.Parse(Console.ReadLine());
-                    Console.Write($"Elija al segundo combatiente (0..{maximo}) ");
-                    int segundo = int.Parse(Console.ReadLine());
+
+                     int _maximo = personajesCreados.Count - 1;
+                    Console.Write($"Elija al primer combatiente (0..{_maximo}) ");
+                    int primero = int.Parse(Console.ReadLine()!);
+                    Console.Write($"Elija al segundo combatiente (0..{_maximo}) ");
+                    int segundo = int.Parse(Console.ReadLine()!);
 
                     if (primero == segundo)
                     {
@@ -116,6 +122,14 @@ class Program
                     break;
 
                 case "8":
+                          var personajesCreados2 = Deserializar(@"C:\Users\user\Desktop\tallerteoriastp\Taller\Videojuego\rpg-2022-emmanuelbilkis\RPG\jugadores.json"); 
+                          personajesCreados.AddRange(personajesCreados2);
+                          Console.WriteLine("El archivo json esta cargaado en el sistema, ahora puede elegir los personajes desde el combate");
+
+                    break;
+
+                case "9":
+
                     salir = true;
                     break;
             }
@@ -142,6 +156,14 @@ class Program
             
     }
 
+    public static List<Personaje> Deserializar(string ruta)
+    { 
+        string textoJson = File.ReadAllText(ruta);
+        var nuevaLista = JsonSerializer.Deserialize<List<Personaje>>(textoJson)!;
+        //var nuevalista = nuevaLista.First();
+        return nuevaLista;
+    }
+
     public static void guardarGanadoresCSV(string nombre, string extension, List<Personaje> ganadores)
     {
 
@@ -166,11 +188,10 @@ class Program
 
             using (StreamReader strread = new StreamReader(miArchivo))
             {
-
-                    string ganadores = strread.ReadToEnd();
-                    Console.WriteLine(ganadores);
-                    strread.Close();   
+                string ganadores = strread.ReadToEnd();
+                Console.WriteLine(ganadores);
+                strread.Close();   
             }  
     }
-
 }
+

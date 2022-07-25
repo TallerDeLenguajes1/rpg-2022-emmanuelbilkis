@@ -10,13 +10,19 @@ public class Personaje
     private int armadura;
     private int destreza;
 
+    [JsonPropertyName("nombre")]
     public string Nombre { get; }
+    [JsonPropertyName("tipoP")]
     public Tipo TipoP { get; }
+    [JsonPropertyName("apodo")]
     public string Apodo { get; set; }
-
+    [JsonPropertyName("salud")]
     public int Salud { get; set; }
+    [JsonPropertyName("nacimiento")]
     public DateTime Nacimiento { get; }
+    [JsonPropertyName("edad")]
     public int Edad { get; }
+    [JsonPropertyName("velocidad")]
     public int Velocidad
     {
         get
@@ -31,6 +37,7 @@ public class Personaje
             }
         }
     }
+    [JsonPropertyName("fuerza")]
     public int Fuerza
     {
         get
@@ -46,6 +53,7 @@ public class Personaje
             }
         }
     }
+    [JsonPropertyName("nivel")]
     public int Nivel
     {
         get
@@ -61,6 +69,7 @@ public class Personaje
             }
         }
     }
+    [JsonPropertyName("armadura")]
     public int Armadura
     {
         get
@@ -75,6 +84,7 @@ public class Personaje
             }
         }
     }
+    [JsonPropertyName("destreza")]
     public int Destreza
     {
         get
@@ -108,6 +118,25 @@ public Personaje (string nombre, Tipo tipo, DateTime nacimiento) // al pasarlo e
         Destreza = random.Next(1, 6);
     }
 
+[JsonConstructor]
+public Personaje()
+{
+        Nombre = "sdadasd";
+        Apodo = "gege";
+        TipoP = Tipo.Arquero;;
+        Salud = 100;
+        Nacimiento = DateTime.UtcNow;
+        Edad =  DateTime.Now.Year - (Nacimiento.Year - 25000);
+
+        var random = new Random();
+        Velocidad = random.Next(1, 11);
+        Fuerza = random.Next(1, 11);
+        Nivel = random.Next(1, 11);
+        Armadura = random.Next(1, 11);
+        Destreza = random.Next(1, 6);
+}
+
+
     public string DescripcionDeDatos()
     {
         return
@@ -127,36 +156,6 @@ public Personaje (string nombre, Tipo tipo, DateTime nacimiento) // al pasarlo e
             $"Nivel     : {Nivel}" + Environment.NewLine +
             $"Armadura  : {Armadura}" + Environment.NewLine +
             $"Destreza  : {Destreza}";
-    }
-
-
-    public string CrearJson(Personaje personaje)
- {
-    string jsonString;
-    return  jsonString = JsonSerializer.Serialize(personaje);
-
-}
-
-    public void GuardarJson(string nombreArchivo, string formato, Personaje personaje)
-    {
-        string persStr = CrearJson(personaje);
-        FileStream MiArchivo = new FileStream(nombreArchivo + formato, FileMode.Create);
-        using (StreamWriter Strwriter = new StreamWriter(MiArchivo))
-        {
-            Strwriter.WriteLine("{0}", persStr);
-            Strwriter.Close();
-        }
-    }
-
-    public void GuardarCSV(string nombreArchivo, string formato, Personaje personaje)
-    {
-        string persStr = CrearJson(personaje);
-        FileStream MiArchivo = new FileStream(nombreArchivo + formato, FileMode.Create);
-        using (StreamWriter Strwriter = new StreamWriter(MiArchivo))
-        {
-            Strwriter.WriteLine("{0};{1};{2}", personaje.Nombre, personaje.TipoP,personaje.Salud);
-            Strwriter.Close();
-        }
-    }
+    }    
 
 }

@@ -67,8 +67,6 @@ public class Combate
     private int CalcularEfectividadDeDisparo() => random.Next(1, 101);
 
     private int CalcularPoderDeDefensa(int indice) =>
-        peleadores[indice].Armadura * peleadores[indice].Velocidad;
-
+    peleadores[indice].Armadura * peleadores[indice].Velocidad;
     
-
 }

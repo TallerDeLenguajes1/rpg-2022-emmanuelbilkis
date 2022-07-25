@@ -1,0 +1,41 @@
+[
+  {
+    "nombre": "Sturm",
+    "tipoP": 0,
+    "apodo": null,
+    "salud": 100,
+    "nacimiento": "1802-07-23T09:16:55.7413329-03:00",
+    "edad": 220,
+    "velocidad": 7,
+    "fuerza": 1,
+    "nivel": 3,
+    "armadura": 6,
+    "destreza": 5
+  },
+  {
+    "nombre": "Gandalf",
+    "tipoP": 4,
+    "apodo": null,
+    "salud": 100,
+    "nacimiento": "1771-07-23T09:16:57.4976272-03:00",
+    "edad": 251,
+    "velocidad": 1,
+    "fuerza": 3,
+    "nivel": 2,
+    "armadura": 4,
+    "destreza": 2
+  },
+  {
+    "nombre": "Gimli",
+    "tipoP": 1,
+    "apodo": null,
+    "salud": 100,
+    "nacimiento": "1937-07-23T09:16:58.4985822-03:00",
+    "edad": 85,
+    "velocidad": 6,
+    "fuerza": 9,
+    "nivel": 10,
+    "armadura": 5,
+    "destreza": 1
+  }
+]
