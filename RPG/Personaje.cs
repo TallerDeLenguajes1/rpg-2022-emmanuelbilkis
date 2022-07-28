@@ -121,9 +121,9 @@ public Personaje (string nombre, Tipo tipo, DateTime nacimiento) // al pasarlo e
 [JsonConstructor]
 public Personaje()
 {
-        Nombre = "sdadasd";
-        Apodo = "gege";
-        TipoP = Tipo.Arquero;;
+        Nombre = "";
+        Apodo = "";
+        TipoP = Tipo.Arquero;
         Salud = 100;
         Nacimiento = DateTime.UtcNow;
         Edad =  DateTime.Now.Year - (Nacimiento.Year - 25000);
@@ -135,6 +135,7 @@ public Personaje()
         Armadura = random.Next(1, 11);
         Destreza = random.Next(1, 6);
 }
+
 
 
     public string DescripcionDeDatos()

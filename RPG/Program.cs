@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace videojuego;
 
 class Program
 {
-    static void Main(string[] args)
+  
+     public static void Main()
     {
         int index;
         string texto;
@@ -122,11 +124,39 @@ class Program
                     break;
 
                 case "8":
-                          var personajesCreados2 = Deserializar(@"C:\Users\user\Desktop\tallerteoriastp\Taller\Videojuego\rpg-2022-emmanuelbilkis\RPG\jugadores.json"); 
-                          personajesCreados.AddRange(personajesCreados2);
-                          Console.WriteLine("El archivo json esta cargaado en el sistema, ahora puede elegir los personajes desde el combate");
+                          
+                            string textoJson = File.ReadAllText(@"C:\Users\user\Desktop\tallerteoriastp\Taller\Videojuego\rpg-2022-emmanuelbilkis\RPG\jugadores.json");
+                            var nuevaLista = JsonSerializer.Deserialize<List<Personaje>>(textoJson)!;
+
+                             int maximo2 = nuevaLista.Count - 1;
+                            Console.Write($"Elija al primer combatiente (0..{maximo2}) ");
+                            int primero2 = int.Parse(Console.ReadLine()!);
+                            Console.Write($"Elija al segundo combatiente (0..{maximo2}) ");
+                            int segundo2 = int.Parse(Console.ReadLine()!);
+
+                        if (primero2 == segundo2)
+                         {
+                            Console.WriteLine($"{nuevaLista[primero2].Nombre} no puede pelear consigo mismo");
+                         }
+                        else
+                            {
+                                var primerCombatiente = nuevaLista[primero2];
+                                var segundoCombatiente = nuevaLista[segundo2];
+                                var combate = new Combate(primerCombatiente, segundoCombatiente);
+                                combate.Pelear();
+                            if (combate.Ganador is null)
+                            {
+                                Console.WriteLine($"La pelea entre {primerCombatiente.Nombre} y {segundoCombatiente.Nombre} terminó en empate");
+                            }
+                            else
+                                {
+                                    Console.WriteLine($"Ganó el {combate.Ganador.TipoP}");
+                                    ganadores.Add(combate.Ganador);
+                                }
+                            }
 
                     break;
+
 
                 case "9":
 
@@ -156,13 +186,6 @@ class Program
             
     }
 
-    public static List<Personaje> Deserializar(string ruta)
-    { 
-        string textoJson = File.ReadAllText(ruta);
-        var nuevaLista = JsonSerializer.Deserialize<List<Personaje>>(textoJson)!;
-        //var nuevalista = nuevaLista.First();
-        return nuevaLista;
-    }
 
     public static void guardarGanadoresCSV(string nombre, string extension, List<Personaje> ganadores)
     {
